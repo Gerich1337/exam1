@@ -1,0 +1,35 @@
+﻿<Window x:Class="exam1.Windows.AddClientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:exam1.Windows"
+        mc:Ignorable="d"
+        Title="AddClientWindow" Height="450" Width="800">
+    <Grid Background="LightBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel  Grid.Column="1" VerticalAlignment="Center" Margin="30">
+            <TextBlock Text="Логин" FontSize="20"/>
+            <TextBox x:Name="txtLogin" FontSize="20" MaxLength="30"/>
+            <TextBlock Text="Пароль" FontSize="20"/>
+            <TextBox x:Name="txtPassword" FontSize="20" MaxLength="30"/>
+            <TextBlock Text="Пароль" FontSize="20"/>
+            <TextBox x:Name="txtSurname" FontSize="20" MaxLength="30"/>
+            <TextBlock Text="Пароль" FontSize="20"/>
+            <TextBox x:Name="txtName" FontSize="20" MaxLength="30"/>
+            <TextBlock Text="Отчество" FontSize="20"/>
+            <TextBox x:Name="txtPatronymic" FontSize="20" MaxLength="30"/>
+            <TextBlock Text="Номер" FontSize="20"/>
+            <TextBox x:Name="txtNumber" FontSize="20" MaxLength="30"/>
+            <Button Content="Добавить" Click="Button_Click"/>
+            
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d0112e05cc5e459b80fd886fa7394ec4" Name="Diagram1">
+        <EntityTypeShape EntityType="prog14Model.Accounts" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog14Model.Errors" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog14Model.Materials" Width="1.5" PointX="5.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog14Model.MaterialsOnStorages" Width="1.5" PointX="8" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog14Model.Phones" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog14Model.Roles" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog14Model.Storages" Width="1.5" PointX="5.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog14Model.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog14Model.Types" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="prog14Model.FK_Accounts_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="prog14Model.FK_MaterialsOnStorages_Materials" ManuallyRouted="false" />
+        <AssociationConnector Association="prog14Model.FK_MaterialsOnStorages_Storages" ManuallyRouted="false" />
+        <AssociationConnector Association="prog14Model.FK_Phones_Types" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="prog14Model.ActsOfBuying" Width="1.5" PointX="5.25" PointY="2" />
+        <AssociationConnector Association="prog14Model.FK_ActsOfBuying_Accounts" />
+        <AssociationConnector Association="prog14Model.FK_ActsOfBuying_Phones" />
+        <EntityTypeShape EntityType="prog14Model.ActsOfRepairing" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="prog14Model.FK_ActsOfRepairing_Accounts" />
+        <AssociationConnector Association="prog14Model.FK_ActsOfRepairing_Errors" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

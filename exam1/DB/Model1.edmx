@@ -1,0 +1,638 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище prog14Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="IdAccount" />
+          </Key>
+          <Property Name="IdAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="30" />
+          <Property Name="Password" Type="varchar" MaxLength="30" />
+          <Property Name="IdRole" Type="int" />
+          <Property Name="Surname" Type="varchar" MaxLength="30" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Patronymic" Type="varchar" MaxLength="30" />
+          <Property Name="Balance" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <EntityType Name="ActsOfBuying">
+          <Key>
+            <PropertyRef Name="IdActB" />
+          </Key>
+          <Property Name="IdActB" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAccount" Type="int" />
+          <Property Name="IdPhone" Type="int" />
+        </EntityType>
+        <EntityType Name="ActsOfRepairing">
+          <Key>
+            <PropertyRef Name="IdActR" />
+          </Key>
+          <Property Name="IdActR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAccount" Type="int" />
+          <Property Name="IdPhone" Type="int" />
+          <Property Name="IdError" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Errors">
+          <Key>
+            <PropertyRef Name="IdError" />
+          </Key>
+          <Property Name="IdError" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameMaterial" Type="varchar" MaxLength="30" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="MaterialsOnStorages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStorage" Type="int" />
+          <Property Name="IdMaterial" Type="int" />
+        </EntityType>
+        <EntityType Name="Phones">
+          <Key>
+            <PropertyRef Name="IdPhone" />
+          </Key>
+          <Property Name="IdPhone" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamePhone" Type="varchar" MaxLength="50" />
+          <Property Name="IdType" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Photo" Type="text" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Storages">
+          <Key>
+            <PropertyRef Name="IdStorage" />
+          </Key>
+          <Property Name="IdStorage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStorage" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Types">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameType" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <Association Name="FK_Accounts_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRole" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActsOfBuying_Accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="ActsOfBuying" Type="Self.ActsOfBuying" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="IdAccount" />
+            </Principal>
+            <Dependent Role="ActsOfBuying">
+              <PropertyRef Name="IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActsOfBuying_Phones">
+          <End Role="Phones" Type="Self.Phones" Multiplicity="0..1" />
+          <End Role="ActsOfBuying" Type="Self.ActsOfBuying" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phones">
+              <PropertyRef Name="IdPhone" />
+            </Principal>
+            <Dependent Role="ActsOfBuying">
+              <PropertyRef Name="IdPhone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActsOfRepairing_Accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="ActsOfRepairing" Type="Self.ActsOfRepairing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="IdAccount" />
+            </Principal>
+            <Dependent Role="ActsOfRepairing">
+              <PropertyRef Name="IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActsOfRepairing_Errors">
+          <End Role="Errors" Type="Self.Errors" Multiplicity="0..1" />
+          <End Role="ActsOfRepairing" Type="Self.ActsOfRepairing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Errors">
+              <PropertyRef Name="IdError" />
+            </Principal>
+            <Dependent Role="ActsOfRepairing">
+              <PropertyRef Name="IdError" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsOnStorages_Materials">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="0..1" />
+          <End Role="MaterialsOnStorages" Type="Self.MaterialsOnStorages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="MaterialsOnStorages">
+              <PropertyRef Name="IdMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsOnStorages_Storages">
+          <End Role="Storages" Type="Self.Storages" Multiplicity="0..1" />
+          <End Role="MaterialsOnStorages" Type="Self.MaterialsOnStorages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storages">
+              <PropertyRef Name="IdStorage" />
+            </Principal>
+            <Dependent Role="MaterialsOnStorages">
+              <PropertyRef Name="IdStorage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phones_Types">
+          <End Role="Types" Type="Self.Types" Multiplicity="0..1" />
+          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="Phones">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище prog14ModelContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActsOfBuying" EntityType="Self.ActsOfBuying" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActsOfRepairing" EntityType="Self.ActsOfRepairing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialsOnStorages" EntityType="Self.MaterialsOnStorages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phones" EntityType="Self.Phones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storages" EntityType="Self.Storages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Types" EntityType="Self.Types" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Accounts_Roles" Association="Self.FK_Accounts_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActsOfBuying_Accounts" Association="Self.FK_ActsOfBuying_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="ActsOfBuying" EntitySet="ActsOfBuying" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActsOfBuying_Phones" Association="Self.FK_ActsOfBuying_Phones">
+            <End Role="Phones" EntitySet="Phones" />
+            <End Role="ActsOfBuying" EntitySet="ActsOfBuying" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActsOfRepairing_Accounts" Association="Self.FK_ActsOfRepairing_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="ActsOfRepairing" EntitySet="ActsOfRepairing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActsOfRepairing_Errors" Association="Self.FK_ActsOfRepairing_Errors">
+            <End Role="Errors" EntitySet="Errors" />
+            <End Role="ActsOfRepairing" EntitySet="ActsOfRepairing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsOnStorages_Materials" Association="Self.FK_MaterialsOnStorages_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="MaterialsOnStorages" EntitySet="MaterialsOnStorages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsOnStorages_Storages" Association="Self.FK_MaterialsOnStorages_Storages">
+            <End Role="Storages" EntitySet="Storages" />
+            <End Role="MaterialsOnStorages" EntitySet="MaterialsOnStorages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phones_Types" Association="Self.FK_Phones_Types">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="Phones" EntitySet="Phones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="prog14Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="IdAccount" />
+          </Key>
+          <Property Name="IdAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IdRole" Type="Int32" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Balance" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Accounts_Roles" FromRole="Accounts" ToRole="Roles" />
+          <NavigationProperty Name="ActsOfBuying" Relationship="prog14Model.FK_ActsOfBuying_Accounts" FromRole="Accounts" ToRole="ActsOfBuying" />
+          <NavigationProperty Name="ActsOfRepairing" Relationship="prog14Model.FK_ActsOfRepairing_Accounts" FromRole="Accounts" ToRole="ActsOfRepairing" />
+        </EntityType>
+        <EntityType Name="Errors">
+          <Key>
+            <PropertyRef Name="IdError" />
+          </Key>
+          <Property Name="IdError" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ActsOfRepairing" Relationship="prog14Model.FK_ActsOfRepairing_Errors" FromRole="Errors" ToRole="ActsOfRepairing" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameMaterial" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="MaterialsOnStorages" Relationship="Self.FK_MaterialsOnStorages_Materials" FromRole="Materials" ToRole="MaterialsOnStorages" />
+        </EntityType>
+        <EntityType Name="MaterialsOnStorages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStorage" Type="Int32" />
+          <Property Name="IdMaterial" Type="Int32" />
+          <NavigationProperty Name="Materials" Relationship="Self.FK_MaterialsOnStorages_Materials" FromRole="MaterialsOnStorages" ToRole="Materials" />
+          <NavigationProperty Name="Storages" Relationship="Self.FK_MaterialsOnStorages_Storages" FromRole="MaterialsOnStorages" ToRole="Storages" />
+        </EntityType>
+        <EntityType Name="Phones">
+          <Key>
+            <PropertyRef Name="IdPhone" />
+          </Key>
+          <Property Name="IdPhone" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdType" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Types" Relationship="Self.FK_Phones_Types" FromRole="Phones" ToRole="Types" />
+          <NavigationProperty Name="ActsOfBuying" Relationship="prog14Model.FK_ActsOfBuying_Phones" FromRole="Phones" ToRole="ActsOfBuying" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Accounts_Roles" FromRole="Roles" ToRole="Accounts" />
+        </EntityType>
+        <EntityType Name="Storages">
+          <Key>
+            <PropertyRef Name="IdStorage" />
+          </Key>
+          <Property Name="IdStorage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStorage" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MaterialsOnStorages" Relationship="Self.FK_MaterialsOnStorages_Storages" FromRole="Storages" ToRole="MaterialsOnStorages" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Types">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameType" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Phones" Relationship="Self.FK_Phones_Types" FromRole="Types" ToRole="Phones" />
+        </EntityType>
+        <Association Name="FK_Accounts_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRole" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsOnStorages_Materials">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="0..1" />
+          <End Role="MaterialsOnStorages" Type="Self.MaterialsOnStorages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="MaterialsOnStorages">
+              <PropertyRef Name="IdMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsOnStorages_Storages">
+          <End Role="Storages" Type="Self.Storages" Multiplicity="0..1" />
+          <End Role="MaterialsOnStorages" Type="Self.MaterialsOnStorages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storages">
+              <PropertyRef Name="IdStorage" />
+            </Principal>
+            <Dependent Role="MaterialsOnStorages">
+              <PropertyRef Name="IdStorage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phones_Types">
+          <End Role="Types" Type="Self.Types" Multiplicity="0..1" />
+          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="Phones">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="prog14Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" />
+          <EntitySet Name="Errors" EntityType="Self.Errors" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" />
+          <EntitySet Name="MaterialsOnStorages" EntityType="Self.MaterialsOnStorages" />
+          <EntitySet Name="Phones" EntityType="Self.Phones" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Storages" EntityType="Self.Storages" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Types" EntityType="Self.Types" />
+          <AssociationSet Name="FK_Accounts_Roles" Association="Self.FK_Accounts_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsOnStorages_Materials" Association="Self.FK_MaterialsOnStorages_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="MaterialsOnStorages" EntitySet="MaterialsOnStorages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsOnStorages_Storages" Association="Self.FK_MaterialsOnStorages_Storages">
+            <End Role="Storages" EntitySet="Storages" />
+            <End Role="MaterialsOnStorages" EntitySet="MaterialsOnStorages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phones_Types" Association="Self.FK_Phones_Types">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="Phones" EntitySet="Phones" />
+          </AssociationSet>
+          <EntitySet Name="ActsOfBuying" EntityType="prog14Model.ActsOfBuying" />
+          <AssociationSet Name="FK_ActsOfBuying_Accounts" Association="prog14Model.FK_ActsOfBuying_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="ActsOfBuying" EntitySet="ActsOfBuying" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActsOfBuying_Phones" Association="prog14Model.FK_ActsOfBuying_Phones">
+            <End Role="Phones" EntitySet="Phones" />
+            <End Role="ActsOfBuying" EntitySet="ActsOfBuying" />
+          </AssociationSet>
+          <EntitySet Name="ActsOfRepairing" EntityType="prog14Model.ActsOfRepairing" />
+          <AssociationSet Name="FK_ActsOfRepairing_Accounts" Association="prog14Model.FK_ActsOfRepairing_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="ActsOfRepairing" EntitySet="ActsOfRepairing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActsOfRepairing_Errors" Association="prog14Model.FK_ActsOfRepairing_Errors">
+            <End Role="Errors" EntitySet="Errors" />
+            <End Role="ActsOfRepairing" EntitySet="ActsOfRepairing" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ActsOfBuying">
+          <Key>
+            <PropertyRef Name="IdActB" />
+          </Key>
+          <Property Name="IdActB" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAccount" Type="Int32" />
+          <Property Name="IdPhone" Type="Int32" />
+          <NavigationProperty Name="Accounts" Relationship="prog14Model.FK_ActsOfBuying_Accounts" FromRole="ActsOfBuying" ToRole="Accounts" />
+          <NavigationProperty Name="Phones" Relationship="prog14Model.FK_ActsOfBuying_Phones" FromRole="ActsOfBuying" ToRole="Phones" />
+        </EntityType>
+        <Association Name="FK_ActsOfBuying_Accounts">
+          <End Type="prog14Model.Accounts" Role="Accounts" Multiplicity="0..1" />
+          <End Type="prog14Model.ActsOfBuying" Role="ActsOfBuying" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="IdAccount" />
+            </Principal>
+            <Dependent Role="ActsOfBuying">
+              <PropertyRef Name="IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActsOfBuying_Phones">
+          <End Type="prog14Model.Phones" Role="Phones" Multiplicity="0..1" />
+          <End Type="prog14Model.ActsOfBuying" Role="ActsOfBuying" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phones">
+              <PropertyRef Name="IdPhone" />
+            </Principal>
+            <Dependent Role="ActsOfBuying">
+              <PropertyRef Name="IdPhone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ActsOfRepairing">
+          <Key>
+            <PropertyRef Name="IdActR" />
+          </Key>
+          <Property Name="IdActR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAccount" Type="Int32" />
+          <Property Name="IdPhone" Type="Int32" />
+          <Property Name="IdError" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Accounts" Relationship="prog14Model.FK_ActsOfRepairing_Accounts" FromRole="ActsOfRepairing" ToRole="Accounts" />
+          <NavigationProperty Name="Errors" Relationship="prog14Model.FK_ActsOfRepairing_Errors" FromRole="ActsOfRepairing" ToRole="Errors" />
+        </EntityType>
+        <Association Name="FK_ActsOfRepairing_Accounts">
+          <End Type="prog14Model.Accounts" Role="Accounts" Multiplicity="0..1" />
+          <End Type="prog14Model.ActsOfRepairing" Role="ActsOfRepairing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="IdAccount" />
+            </Principal>
+            <Dependent Role="ActsOfRepairing">
+              <PropertyRef Name="IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActsOfRepairing_Errors">
+          <End Type="prog14Model.Errors" Role="Errors" Multiplicity="0..1" />
+          <End Type="prog14Model.ActsOfRepairing" Role="ActsOfRepairing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Errors">
+              <PropertyRef Name="IdError" />
+            </Principal>
+            <Dependent Role="ActsOfRepairing">
+              <PropertyRef Name="IdError" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище prog14ModelContainer" CdmEntityContainer="prog14Entities1">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="prog14Model.Accounts">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Errors">
+            <EntityTypeMapping TypeName="prog14Model.Errors">
+              <MappingFragment StoreEntitySet="Errors">
+                <ScalarProperty Name="IdError" ColumnName="IdError" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="prog14Model.Materials">
+              <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
+                <ScalarProperty Name="NameMaterial" ColumnName="NameMaterial" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialsOnStorages">
+            <EntityTypeMapping TypeName="prog14Model.MaterialsOnStorages">
+              <MappingFragment StoreEntitySet="MaterialsOnStorages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdStorage" ColumnName="IdStorage" />
+                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phones">
+            <EntityTypeMapping TypeName="prog14Model.Phones">
+              <MappingFragment StoreEntitySet="Phones">
+                <ScalarProperty Name="IdPhone" ColumnName="IdPhone" />
+                <ScalarProperty Name="NamePhone" ColumnName="NamePhone" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="prog14Model.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storages">
+            <EntityTypeMapping TypeName="prog14Model.Storages">
+              <MappingFragment StoreEntitySet="Storages">
+                <ScalarProperty Name="IdStorage" ColumnName="IdStorage" />
+                <ScalarProperty Name="NameStorage" ColumnName="NameStorage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="prog14Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Types">
+            <EntityTypeMapping TypeName="prog14Model.Types">
+              <MappingFragment StoreEntitySet="Types">
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="NameType" ColumnName="NameType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActsOfBuying">
+            <EntityTypeMapping TypeName="prog14Model.ActsOfBuying">
+              <MappingFragment StoreEntitySet="ActsOfBuying">
+                <ScalarProperty Name="IdPhone" ColumnName="IdPhone" />
+                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
+                <ScalarProperty Name="IdActB" ColumnName="IdActB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActsOfRepairing">
+            <EntityTypeMapping TypeName="prog14Model.ActsOfRepairing">
+              <MappingFragment StoreEntitySet="ActsOfRepairing">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IdError" ColumnName="IdError" />
+                <ScalarProperty Name="IdPhone" ColumnName="IdPhone" />
+                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
+                <ScalarProperty Name="IdActR" ColumnName="IdActR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
